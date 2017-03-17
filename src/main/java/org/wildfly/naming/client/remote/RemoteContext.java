@@ -93,10 +93,17 @@ final class RemoteContext extends AbstractFederatingContext {
         if (name.isEmpty()) {
             return new CompositeName(scheme + ":");
         }
-        final String part0 = name.get(0);
         final Name clone = (Name) name.clone();
-        clone.remove(0);
-        clone.add(0, scheme + ":" + part0);
+        String part0 = name.get(0);
+        // special case for java for backwards compatibility.
+        if (scheme.equals("java")) {
+            if (part0.equals("java:")) {
+                clone.remove(0);
+            }
+        } else {
+            clone.remove(0);
+            clone.add(0, scheme + ":" + part0);
+        }
         return clone;
     }
 
