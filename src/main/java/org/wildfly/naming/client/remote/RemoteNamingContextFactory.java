@@ -49,6 +49,7 @@ public final class RemoteNamingContextFactory implements NamingContextFactory {
     }
 
     public Context createRootContext(final NamingProvider namingProvider, final String nameScheme, final FastHashtable<String, Object> env) throws NamingException {
-        return new RemoteContext((RemoteNamingProvider) namingProvider, nameScheme, env);
+        // treat the java scheme as null...
+        return new RemoteContext((RemoteNamingProvider) namingProvider, "java".equals(nameScheme) ? null : nameScheme, env);
     }
 }
